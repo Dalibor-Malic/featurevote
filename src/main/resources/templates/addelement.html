@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <div th:replace="fragments/head :: head" th:remove="tag"/>
+    <title>Dalis Feature Voting Site</title>
+
+</head>
+<body>
+<div class="container">
+    <div th:insert="fragments/navbar :: navbar"/>
+
+    <form id="register-form" action="#"  th:action="@{/addelement}"  th:object="${element}"  method="post" role="form" style="display: block;">
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="title">Titel</label>
+            <input id="title" tabindex="1" th:field="*{title}" name="title" type="text" placeholder="Titel" class="form-control" required="">
+        </div>
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="description">Beschreibung</label>
+            <textarea class="form-control" tabindex="2" id="description" th:field="*{description}" name="description" required="">...</textarea>
+        </div>
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="description">Kategorie</label>
+                <select id="selectbasic" th:field="*{category}" name="selectbasic" class="form-control">
+                    <option value=""></option>
+                    <option value="vOffice">vOffice</option>
+                    <option value="Event">Event</option>
+                </select>
+        </div>
+        <div class="form-group" th:if="${#authorization.expression('hasAuthority(''ADMIN'')')}">
+            <label class="col-md-4 control-label" for="online">Online</label>
+            <input id="online" tabindex="6" th:field="*{online}" name="admin" type="checkbox" class="form-control">
+        </div>
+        <div class="form-group">
+            <div class="row">
+                <div class="col-sm-6 col-sm-offset-3">
+                    <input type="submit" name="register-submit" id="register-submit" tabindex="8" class="form-control btn btn-register" value="Anlegen!">
+                </div>
+            </div>
+        </div>
+    </form>
+
+</div> <!-- /container -->
+<!-- Bootstrap core JavaScript
+================================================== -->
+
+<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+</body>
+</html>

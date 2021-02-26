@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <div th:replace="fragments/head :: head" th:remove="tag"/>
+    <title>Dalis Feature Voting Site</title>
+</head>
+<body>
+<div class="container">
+    <div th:insert="fragments/navbar :: navbar"/>
+
+    <div class="jumbotron">
+        <form action="#" th:action="@{/adduser}" th:object="${user}" method="post">
+
+            <!-- Text input-->
+            <div class="form-group">
+                <label class="col-md-4 control-label" for="email">Email</label>
+                <div class="col-md-4">
+                    <input id="email"  th:field="*{email}" name="email" type="text" placeholder="Email Adresse" class="form-control input-md" required="">
+                    <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
+                </div>
+            </div>
+
+            <!-- Password input-->
+            <div class="form-group">
+                <label class="col-md-4 control-label" for="password">Passwort</label>
+                <div class="col-md-4">
+                    <input id="password" name="password" type="password" placeholder="Passwort" class="form-control input-md" required="">
+                    <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>
+                </div>
+            </div>
+
+            <!-- Text input-->
+            <div class="form-group">
+                <label class="col-md-4 control-label" for="firstname">Vorname</label>
+                <div class="col-md-4">
+                    <input id="firstname"  th:field="*{firstname}" name="firstname" type="text" placeholder="Vorname" class="form-control input-md" required="">
+                    <span th:if="${#fields.hasErrors('firstname')}" th:errors="*{firstname}"></span>
+                </div>
+            </div>
+
+            <!-- Text input-->
+            <div class="form-group">
+                <label class="col-md-4 control-label" for="lastname">Nachname</label>
+                <div class="col-md-4">
+                    <input id="lastname"  th:field="*{lastname}" name="lastname" type="text" placeholder="Nachname" class="form-control input-md" required="">
+                    <span th:if="${#fields.hasErrors('lastname')}" th:errors="*{lastname}"></span>
+                </div>
+            </div>
+
+            <!-- Button -->
+            <div class="form-group">
+                <label class="col-md-4 control-label" for="singlebutton">Anmelden</label>
+                <div class="col-md-4">
+                    <input id="singlebutton" type="submit" value="Add User" class="btn btn-primary">
+                </div>
+            </div>
+
+        </form>
+    </div>
+</div> <!-- /container -->
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="../static/js/bootstrap.js" th:href="@{/js/bootstrap.js}"></script>
+<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+</body>
+</html>

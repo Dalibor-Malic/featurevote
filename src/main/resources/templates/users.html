@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <div th:replace="fragments/head :: head" th:remove="tag"/>
+    <title>Dalis Feature Voting Site</title>
+
+    <script src="../static/js/featurevotinglist.js" th:src="@{/js/featurevotinglist.js}"></script>
+</head>
+<body>
+<div class="container">
+    <div th:insert="fragments/navbar :: navbar"/>
+
+    <div class="row">
+        <div class="col-md-3">
+            <form action="#" method="get">
+                <div class="input-group">
+                    <!-- USE TWITTER TYPEAHEAD JSON WITH API TO SEARCH -->
+                    <input class="form-control" id="system-search" name="q" placeholder="Search for" required>
+                    <span class="input-group-btn">
+                    <button type="submit" class="btn btn-default"><i class="glyphicon glyphicon-search"></i></button>
+                </span>
+                </div>
+            </form>
+        </div>
+        <div class="col-md-9">
+            <table class="table table-list-search">
+                <thead>
+                <tr>
+                    <th>Stimmen</th>
+                    <th>Vorname</th>
+                    <th>Nachname</th>
+                    <th>Unternehmen</th>
+                    <th>Admin</th>
+                    <th>Details</th>
+                </tr>
+                </thead>
+                <tbody>
+                <th:block th:each="user : ${users}">
+                    <tr>
+                        <td th:text="${user.votingFactor}">...</td>
+                        <td th:text="${user.firstname}">...</td>
+                        <td th:text="${user.lastname}">...</td>
+                        <td th:text="${user.company}">...</td>
+                        <td th:if="${user.admin == true}" class="glyphicon glyphicon-edit" data-toggle="tooltip" title="Admin"/></td>
+                        <td th:if="${user.admin == false}"></td>
+
+                        <td> <a th:href="@{/updateuser/{id}(id=${user.id})}">Details</a> </td>
+
+                    </tr>
+                </th:block>
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+</div> <!-- /container -->
+
+</body>
+</html>

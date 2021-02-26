@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <div th:replace="fragments/head :: head" th:remove="tag"/>
+    <title>Dalis Feature Voting Site</title>
+
+</head>
+<body>
+<div class="container">
+    <div th:insert="fragments/navbar :: navbar"/>
+
+    <form id="register-form" action="#"  th:action="@{/updateelement/{id}(id=${element.id})}"  th:object="${element}"  method="post" role="form" style="display: block;">
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="title">Titel</label>
+            <input th:if="${#authorization.expression('hasAuthority(''ADMIN'')') || owner == true}" id="title" tabindex="1" th:field="*{title}" name="title" type="text" placeholder="Titel" class="form-control" required="">
+            <input th:if="not ${#authorization.expression('hasAuthority(''ADMIN'')') || owner == true}" id="title" tabindex="1" th:field="*{title}" name="title" type="text" placeholder="Titel" class="form-control" required="" disabled="">
+        </div>
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="description">Beschreibung</label>
+            <textarea th:if="${#authorization.expression('hasAuthority(''ADMIN'')') || owner == true}" class="form-control" tabindex="2" id="description" th:field="*{description}" name="description" required="">...</textarea>
+            <textarea th:if="not ${#authorization.expression('hasAuthority(''ADMIN'')') || owner == true}" class="form-control" tabindex="2" id="description" th:field="*{description}" name="description" required="" disabled="">...</textarea>
+        </div>
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="description">Kategorie</label>
+            <select id="selectbasic" th:field="*{category}" name="selectbasic" class="form-control"  th:if="${#authorization.expression('hasAuthority(''ADMIN'')') || owner == true}">
+                <option value=""></option>
+                <option value="vOffice">vOffice</option>
+                <option value="Event">Event</option>
+            </select>
+            <input th:if="not ${#authorization.expression('hasAuthority(''ADMIN'')') || owner == true}" id="category" tabindex="1" th:field="*{category}" name="category" type="text" placeholder="Kategorie" class="form-control" required="" disabled="">
+        </div>
+        <div class="form-group" th:if="${#authorization.expression('hasAuthority(''ADMIN'')')}">
+            <label class="col-md-4 control-label" for="online">Online</label>
+            <input id="online" tabindex="6" th:field="*{online}" name="admin" type="checkbox" class="form-control">
+        </div>
+        <div class="form-group" >
+            <div class="row">
+                <div class="col-sm-6 col-sm-offset-3">
+                    <input th:if="${#authorization.expression('hasAuthority(''ADMIN'')') || owner == true}" type="submit" name="register-submit" id="register-submit" tabindex="4" class="form-control btn btn-register" value="Aktualisieren!">
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <div class="col-md-4">
+        <a th:if="${voted == false}"  th:href="@{/voteforelement/{id}(id=${element.id})}" class="btn btn-info" role="button">DAFÜR STIMMEN</a>
+        <a th:if="${voted == true}"  th:href="@{/revertvoteforelement/{id}(id=${element.id})}" class="btn btn-info" role="button">STIMME ZURÜCKNEHMEN</a>
+    </div>
+
+    <div class="containerx">
+        <h3 class=" text-center">Kommentare</h3>
+        <div class="messaging">
+            <div class="inbox_msg">
+                <div class="mesgs">
+                    <div class="msg_history">
+                        <th:block th:each="comment : ${comments}">
+
+                            <!--links                            -->
+                            <div class="incoming_msg" th:if="${comment.counter % 2 == 0}">
+                                <div class="received_msg">
+                                    <div class="incoming_msg_name" th:text="${comment.userFirstname + ' ' + comment.userLastname }">...</div>
+                                    <div class="received_withd_msg">
+                                        <p th:text="${comment.text}">...</p>
+                                        <span class="time_date" th:text="${#dates.format(comment.createdDate, 'dd.MM.yyyy | HH:mm')}">...</span></div>
+                                </div>
+                            </div>
+                            <!--                            rechts-->
+                            <div class="outgoing_msg" th:if="${comment.counter % 2 == 1}">
+                                <div class="sent_msg_name" th:text="${comment.userFirstname + ' ' + comment.userLastname }">...</div>
+                                <div class="sent_msg">
+                                    <p th:text="${comment.text}">...</p>
+                                    <span class="time_date" th:text="${#dates.format(comment.createdDate, 'dd.MM.yyyy | HH:mm')}"> ... </span> </div>
+                            </div>
+
+                        </th:block>
+                    </div>
+
+                    <div class="type_msg">
+                        <div class="input_msg_write">
+                            <form id="comment-form" action="#"  th:action="@{/createcomment/{id}(id=${element.id})}"  th:object="${newcomment}"  method="post" role="form" style="display: block;">
+                                <input type="text"  id="text" class="write_msg" tabindex="1" th:field="*{text}" placeholder="Type a message" />
+
+                                <button class="msg_send_btn" type="submit"><i class="glyphicon glyphicon-envelope" aria-hidden="true"></i></button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+</div> <!-- /container -->
+<!-- Bootstrap core JavaScript
+================================================== -->
+
+<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+</body>
+</html>

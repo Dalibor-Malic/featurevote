@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <div th:replace="fragments/head :: head" th:remove="tag"/>
+    <title>Dalis Feature Voting Site</title>
+
+</head>
+<body>
+<div class="container">
+    <div th:insert="fragments/navbar :: navbar"/>
+
+    <form id="register-form" action="#"  th:action="@{/updateuser/{id}(id=${user.id})}"  th:object="${user}"  method="post" role="form" style="display: block;">
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="votingFactor">Stimmenfaktor</label>
+            <input id="votingFactor" tabindex="1" th:field="*{votingFactor}" name="votingFactor" type="number" placeholder="1" class="form-control" required="">
+        </div>
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="firstname">Vorname</label>
+            <input id="firstname" tabindex="2" th:field="*{firstname}" name="firstname" type="text" placeholder="Vorname" class="form-control" required="">
+        </div>
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="lastname">Nachname</label>
+            <input id="lastname" tabindex="3" th:field="*{lastname}" name="lastname" type="text" placeholder="Nachname" class="form-control" required="">
+        </div>
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="company">Unternehmen</label>
+            <input id="company" tabindex="4" th:field="*{company}" name="company" type="text" placeholder="Unternehmen" class="form-control" required="">
+        </div>
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="email">Email</label>
+            <input id="email" tabindex="5" th:field="*{email}" name="email" type="text" placeholder="Email" class="form-control" required="">
+        </div>
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="admin">Admin</label>
+            <input id="admin" tabindex="6" th:field="*{admin}" name="admin" type="checkbox" class="form-control">
+        </div>
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="note">Notiz</label>
+            <textarea class="form-control" tabindex="7" id="note" th:field="*{note}" name="note">...</textarea>
+        </div>
+        <div class="form-group">
+            <div class="row">
+                <div class="col-sm-6 col-sm-offset-3">
+                    <input type="submit" name="register-submit" id="register-submit" tabindex="8" class="form-control btn btn-register" value="Aktualisieren!">
+                </div>
+            </div>
+        </div>
+    </form>
+
+</div> <!-- /container -->
+<!-- Bootstrap core JavaScript
+================================================== -->
+
+<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+</body>
+</html>
